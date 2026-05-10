@@ -1,3 +1,22 @@
+// ==========================================
+// BACKGROUND PRELOADER (Loads everything fast)
+// ==========================================
+const assetsToPreload = [
+    'envelop.png',
+    'lov.jpeg',
+    'sadcat1.gif',
+    'sadcat2.gif',
+    'sadcat3.gif',
+    'sadcat4.gif',
+    'sadcat5.gif'
+];
+
+assetsToPreload.forEach(asset => {
+    const img = new Image();
+    img.src = asset; // Forces the browser to download and cache the file instantly
+});
+// ==========================================
+
 // Screen Elements
 const screen1 = document.getElementById('screen1');
 const screen2 = document.getElementById('screen2');
@@ -36,7 +55,7 @@ startBtn.addEventListener('click', () => {
     screen2.classList.add('active');
 });
 
-// "No" Button Logic (With GIF following the button)
+// "No" Button Logic (Instantly loads preloaded GIFs)
 function evadeAndShowCat(e) {
     if (e) e.preventDefault(); 
 
@@ -71,7 +90,7 @@ function evadeAndShowCat(e) {
     let gifX = newX + (btnWidth / 2) - (gifSize / 2); 
     let gifY = newY - gifSize - 10; 
     
-    // Ensure the GIF doesn't bleed off the top or sides of the screen
+    // Ensure the GIF doesn't bleed off the screen
     gifX = Math.max(10, Math.min(gifX, windowWidth - gifSize - 10));
     gifY = Math.max(10, Math.min(gifY, windowHeight - gifSize - 10));
 
@@ -82,14 +101,13 @@ function evadeAndShowCat(e) {
     
     sadCatGif.classList.remove('cat-visible');
     
-    // Quick timeout to reset the fade animation
+    // Quick timeout to reset the fade animation and switch the GIF instantly
     setTimeout(() => {
-        // Removed Images/ - now points directly to the gif
-        sadCatGif.src = `sadcat${catIndex}.gif`;
+        sadCatGif.src = `sadcat${catIndex}.gif`; // Loads instantly from the preloader!
         sadCatGif.classList.add('cat-visible');
         
         catIndex++;
-        if (catIndex > 5) catIndex = 1; 
+        if (catIndex > 5) catIndex = 1; // Loops back to 1 if clicked more than 5 times
 
         catTimer = setTimeout(() => {
             sadCatGif.classList.remove('cat-visible');
@@ -134,7 +152,7 @@ envelopeContainer.addEventListener('click', () => {
             letterPaper.classList.add('letter-visible');
         }, 50);
 
-        // Start typing and fade in the photo heart slowly
+        // Start typing and bounce in the heart photo
         setTimeout(() => {
             heartPhoto.classList.add('heart-visible');
             startTypewriter();
