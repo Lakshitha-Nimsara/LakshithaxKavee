@@ -8,7 +8,7 @@ const startBtn = document.getElementById('startBtn');
 const yesBtn = document.getElementById('yesBtn');
 const noBtn = document.getElementById('noBtn');
 const catContainer = document.getElementById('catContainer');
-const catBubble = document.getElementById('catBubble'); // The new text bubble
+const catBubble = document.getElementById('catBubble'); 
 
 const envelopeContainer = document.getElementById('envelopeContainer');
 const tooltip = document.getElementById('tooltip');
@@ -21,6 +21,7 @@ const heartPhoto = document.getElementById('heartPhoto');
 let catIndex = 1;
 let catTimer;
 let isTyping = false;
+let isEnvelopeClickable = false; // Lock the envelope initially!
 
 // The Random Sad Texts Array
 const sadTexts = [
@@ -81,7 +82,7 @@ function evadeAndShowCat(e) {
     let gifX = newX + (btnWidth / 2) - (gifSize / 2); 
     let gifY = newY - gifSize - 10; 
     
-    // Make sure we leave 50px of space at the TOP and RIGHT so the bubble never gets cut off!
+    // Make sure we leave 50px of space at the TOP and RIGHT so the bubble never gets cut off
     gifX = Math.max(10, Math.min(gifX, windowWidth - gifSize - 50));
     gifY = Math.max(50, Math.min(gifY, windowHeight - gifSize - 10));
 
@@ -129,13 +130,16 @@ yesBtn.addEventListener('click', () => {
         envelopeContainer.classList.add('envelope-enter');
     }, 50);
 
+    // Show tooltip and ONLY THEN make the envelope clickable
     setTimeout(() => {
         tooltip.classList.remove('hidden-tooltip');
+        isEnvelopeClickable = true; // Unlock the envelope!
     }, 1050);
 });
 
 // Envelope Click Logic
 envelopeContainer.addEventListener('click', () => {
+    if (!isEnvelopeClickable) return; // Prevent clicks if bubble hasn't loaded yet
     if (isTyping) return; 
     
     // Softly fade out envelope
