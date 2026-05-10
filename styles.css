@@ -3,12 +3,94 @@ body, html {
     margin: 0;
     padding: 0;
     width: 100%;
-    /* Use min-height so the page naturally handles screen sizes */
     min-height: 100vh; 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-    overflow-x: hidden; /* Only hide horizontal scroll, allow vertical pull-to-refresh */
+    /* The gradient is now handled by the background-container */
+    background-color: #fecfef; 
+    overflow-x: hidden; 
 }
+
+/* --- NEW: ROMANTIC ANIMATED BACKGROUND --- */
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Keeps it behind everything */
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+}
+
+/* 1. CSS Vector Blobs (Soft moving shapes) */
+.vector-blob {
+    position: absolute;
+    filter: blur(60px);
+    opacity: 0.6;
+    animation: floatBlob 10s ease-in-out infinite alternate;
+}
+.blob1 {
+    width: 400px;
+    height: 400px;
+    background: #ffb6b9;
+    top: -10%;
+    left: -10%;
+    /* Creates an organic, vector-like shape */
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+}
+.blob2 {
+    width: 500px;
+    height: 500px;
+    background: #fae3d9;
+    bottom: -20%;
+    right: -10%;
+    border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%;
+    animation-delay: -5s;
+}
+
+@keyframes floatBlob {
+    0% { transform: translateY(0) scale(1) rotate(0deg); }
+    100% { transform: translateY(40px) scale(1.1) rotate(20deg); }
+}
+
+/* 2. Floating Particles (Glowing Orbs) */
+.floating-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.floating-particles li {
+    position: absolute;
+    list-style: none;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    animation: animateParticle 25s linear infinite;
+    bottom: -150px;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+.floating-particles li:nth-child(1) { left: 10%; width: 40px; height: 40px; animation-delay: 0s; animation-duration: 15s; }
+.floating-particles li:nth-child(2) { left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 22s; }
+.floating-particles li:nth-child(3) { left: 40%; width: 50px; height: 50px; animation-delay: 4s; animation-duration: 20s; }
+.floating-particles li:nth-child(4) { left: 60%; width: 25px; height: 25px; animation-delay: 0s; animation-duration: 18s; }
+.floating-particles li:nth-child(5) { left: 80%; width: 10px; height: 10px; animation-delay: 3s; animation-duration: 25s; }
+.floating-particles li:nth-child(6) { left: 90%; width: 35px; height: 35px; animation-delay: 6s; animation-duration: 20s; }
+.floating-particles li:nth-child(7) { left: 50%; width: 20px; height: 20px; animation-delay: 10s; animation-duration: 16s; }
+.floating-particles li:nth-child(8) { left: 70%; width: 45px; height: 45px; animation-delay: 7s; animation-duration: 24s; }
+
+@keyframes animateParticle {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-1000px) scale(0); opacity: 0; }
+}
+/* ------------------------------------------- */
 
 /* Screen Management */
 .screen {
@@ -17,7 +99,7 @@ body, html {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 100vh; /* Takes up full screen height */
+    height: 100vh; 
     position: relative;
 }
 
@@ -334,13 +416,13 @@ body, html {
     
     /* Much Bigger Heart on Mobile! */
     .heart-photo-wrapper {
-        width: 130px; /* Increased massively for mobile view */
+        width: 130px; 
         height: 130px;
         top: -40px;
         right: -25px;
     }
     .heart-img {
-        width: 116px; /* Scaled to match the wrapper */
+        width: 116px; 
         height: 116px;
     }
     
