@@ -73,21 +73,34 @@ body, html {
     z-index: 50;
 }
 
-/* 2x2 cm Sad Cat logic */
-#sadCatGif {
-    width: 75px; 
-    height: 75px;
+/* Zero-Lag Cat Logic (~3cm x 3cm) */
+.cat-container {
+    width: 115px; 
+    height: 115px;
     position: fixed; 
-    object-fit: cover;
-    border-radius: 5px;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
     pointer-events: none;
     z-index: 40; 
 }
 
-#sadCatGif.cat-visible {
+.cat-container.cat-visible {
     opacity: 1;
+}
+
+.cat-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    opacity: 0; /* All cats invisible by default */
+}
+
+.cat-frame.active-frame {
+    opacity: 1; /* Only the active cat shows */
 }
 
 /* Screen 3: Envelope Elements */
@@ -212,35 +225,30 @@ body, html {
     font-weight: bold;
 }
 
-/* -------------------------------------
-   UPDATED HEART PUSHPIN STYLES 
-   ------------------------------------- */
+/* Bigger Heart Pushpin */
 .heart-photo-wrapper {
     position: absolute;
-    top: -45px;   /* Pushes it off the top edge */
-    right: -30px; /* Pushes it off the right edge */
-    width: 120px; /* Much bigger */
-    height: 120px;
+    top: -55px;   
+    right: -40px; 
+    width: 160px; /* Made it significantly larger! */
+    height: 160px;
     background-color: #ff4d6d;
     clip-path: url(#heart-clip);
     -webkit-clip-path: url(#heart-clip);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 50;  /* Keeps it above everything */
-    
-    /* Pinned shadow effect */
+    z-index: 50;  
     filter: drop-shadow(4px 6px 6px rgba(0,0,0,0.3));
     
     opacity: 0;
-    /* Starts small and rotated */
     transform: scale(0.3) rotate(-10deg); 
-    transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy spring animation */
+    transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
 }
 
 .heart-img {
-    width: 108px; /* Slightly smaller to show red border */
-    height: 108px;
+    width: 145px; 
+    height: 145px;
     object-fit: cover;
     clip-path: url(#heart-clip);
     -webkit-clip-path: url(#heart-clip);
@@ -248,7 +256,6 @@ body, html {
 
 .heart-visible {
     opacity: 1;
-    /* Pops into place with a cute tilt */
     transform: scale(1) rotate(12deg); 
 }
 
@@ -293,16 +300,16 @@ body, html {
         font-size: 1rem;
     }
     
-    /* Make heart beautifully sized for phones */
+    /* Bigger Mobile Heart */
     .heart-photo-wrapper {
-        width: 90px;
-        height: 90px;
-        top: -30px;
-        right: -15px;
+        width: 110px;
+        height: 110px;
+        top: -35px;
+        right: -20px;
     }
     .heart-img {
-        width: 80px;
-        height: 80px;
+        width: 98px;
+        height: 98px;
     }
 
     .signature {
