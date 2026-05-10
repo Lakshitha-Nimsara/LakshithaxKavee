@@ -8,6 +8,7 @@ const startBtn = document.getElementById('startBtn');
 const yesBtn = document.getElementById('yesBtn');
 const noBtn = document.getElementById('noBtn');
 const catContainer = document.getElementById('catContainer');
+const catBubble = document.getElementById('catBubble'); // The new text bubble
 
 const envelopeContainer = document.getElementById('envelopeContainer');
 const tooltip = document.getElementById('tooltip');
@@ -21,7 +22,16 @@ let catIndex = 1;
 let catTimer;
 let isTyping = false;
 
-// Text array
+// The Random Sad Texts Array
+const sadTexts = [
+    "දුක දුක දුක 😫",
+    "ඇයි ඔයා මේම 😭",
+    "මං තරහයි ඈ 😭💔",
+    "මොකද අනී 🥺",
+    "ඈ 😭"
+];
+
+// Letter text array
 const noteLines = [
     Array.from("I love you මගෙ මැණිකේ 😚❤️"),
     Array.from("උම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්ම්මා"),
@@ -36,7 +46,7 @@ startBtn.addEventListener('click', () => {
     screen2.classList.add('active');
 });
 
-// "No" Button Logic (Instant Zero-Lag GIFs)
+// "No" Button Logic
 function evadeAndShowCat(e) {
     if (e) e.preventDefault(); 
 
@@ -67,13 +77,13 @@ function evadeAndShowCat(e) {
     noBtn.style.transform = 'none'; 
 
     // Position GIF right above the button
-    const gifSize = 115; // Updated for the ~3cm size
+    const gifSize = 115; 
     let gifX = newX + (btnWidth / 2) - (gifSize / 2); 
     let gifY = newY - gifSize - 10; 
     
-    // Ensure the GIF doesn't bleed off the screen
-    gifX = Math.max(10, Math.min(gifX, windowWidth - gifSize - 10));
-    gifY = Math.max(10, Math.min(gifY, windowHeight - gifSize - 10));
+    // Make sure we leave 50px of space at the TOP and RIGHT so the bubble never gets cut off!
+    gifX = Math.max(10, Math.min(gifX, windowWidth - gifSize - 50));
+    gifY = Math.max(50, Math.min(gifY, windowHeight - gifSize - 10));
 
     catContainer.style.left = `${gifX}px`;
     catContainer.style.top = `${gifY}px`;
@@ -82,13 +92,17 @@ function evadeAndShowCat(e) {
     catContainer.classList.remove('cat-visible');
     
     setTimeout(() => {
-        // 1. Hide all cats
+        // Hide all cats
         document.querySelectorAll('.cat-frame').forEach(cat => cat.classList.remove('active-frame'));
         
-        // 2. Instantly show the correct cat (already loaded in DOM!)
+        // Show the correct cat instantly
         document.getElementById(`cat${catIndex}`).classList.add('active-frame');
         
-        // 3. Make container visible
+        // Pick a random text and put it in the bubble
+        const randomMessage = sadTexts[Math.floor(Math.random() * sadTexts.length)];
+        catBubble.innerText = randomMessage;
+
+        // Make container and bubble visible
         catContainer.classList.add('cat-visible');
         
         // Advance counter
